@@ -70,28 +70,53 @@
 
   .settings {
     margin-top: 2rem;
-    padding-top: 2rem;
+    padding: 1rem;
     border-top: 1px solid #e2e8f0;
+    font-size: 0.9rem;
+    color: #4a5568;
+  }
+
+  .settings h2 {
+    font-size: 1rem;
+    color: #4a5568;
+    margin-bottom: 0.5rem;
   }
 
   .input-group {
-    margin: 1rem 0;
+    margin: 0.5rem 0;
+  }
+
+  .input-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 0.5rem;
   }
 
   label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
     color: #4a5568;
     font-weight: 500;
+    font-size: 0.9rem;
   }
 
   input[type="number"],
   input[type="datetime-local"] {
-    width: 100%;
-    padding: 0.75rem;
+    flex: 1;
+    padding: 0.5rem;
     border: 1px solid #e2e8f0;
     border-radius: 6px;
-    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .settings button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .main-button {
+    padding: 0.75rem 1.5rem;
     font-size: 1rem;
   }
 
@@ -116,28 +141,30 @@
 <div class="card">
   <h1>Prompt Counter</h1>
 
-  <div class="settings">
-    <div class="input-group">
-      <label for="totalPrompts">Set Total Prompts:</label>
-      <input type="number" id="totalPrompts" min="0" />
-      <button id="setTotalBtn">Set Total</button>
-    </div>
-    
-    <div class="input-group">
-      <label for="resetDatetime">Reset Date/Time:</label>
-      <input type="datetime-local" id="resetDatetime" />
-      <button id="setResetTimeBtn">Set Reset Time</button>
-      <button id="clearResetTimeBtn">Clear Reset Time</button>
-    </div>
-  </div>
-
   <div class="counter-container">
-    <button id="usePromptBtn">Use Prompt</button>
+    <button id="usePromptBtn" class="main-button">Use Prompt</button>
     <div class="counter-value" id="counterValue">0</div>
   </div>
 
   <div class="stats">
     <p id="averageMessage"></p>
+  </div>
+
+  <div class="settings">
+    <div class="input-group">
+      <div class="input-row">
+        <input type="number" id="totalPrompts" min="0" placeholder="Set Total Prompts" />
+        <button id="setTotalBtn">Set</button>
+      </div>
+    </div>
+    
+    <div class="input-group">
+      <div class="input-row">
+        <input type="datetime-local" id="resetDatetime" />
+        <button id="setResetTimeBtn">Set</button>
+        <button id="clearResetTimeBtn">Clear</button>
+      </div>
+    </div>
   </div>
 </div>
 
