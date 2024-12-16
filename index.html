@@ -95,6 +95,13 @@
     font-size: 1rem;
   }
 
+  .stats {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #4a5568;
+  }
+
   @media (max-width: 600px) {
     body {
       padding: 1rem;
@@ -128,6 +135,10 @@
     <button id="usePromptBtn">Use Prompt</button>
     <div class="counter-value" id="counterValue">0</div>
   </div>
+
+  <div class="stats">
+    <p id="averageMessage"></p>
+  </div>
 </div>
 
 <script>
@@ -155,9 +166,30 @@
     resetDatetimeEl.value = storedResetTime;
   }
 
+  function updateAverageMessage() {
+    var resetValue = localStorage.getItem(resetTimeKey);
+    var averageMessageEl = document.getElementById('averageMessage');
+    
+    if (resetValue) {
+      var now = new Date();
+      var resetTime = new Date(resetValue);
+      var daysLeft = Math.ceil((resetTime - now) / (1000 * 60 * 60 * 24));
+      
+      if (daysLeft > 0) {
+        var average = (remainingPrompts / daysLeft).toFixed(1);
+        averageMessageEl.textContent = `You have an average of ${average} prompts per day until reset`;
+      } else {
+        averageMessageEl.textContent = 'Reset time has passed';
+      }
+    } else {
+      averageMessageEl.textContent = '';
+    }
+  }
+
   function updateCountDisplay() {
     counterValueEl.textContent = remainingPrompts;
     usePromptBtn.disabled = remainingPrompts <= 0;
+    updateAverageMessage();
   }
 
   function checkResetCondition() {
@@ -203,12 +235,14 @@
     if (chosenTime) {
       localStorage.setItem(resetTimeKey, chosenTime);
       checkResetCondition();
+      updateAverageMessage();
     }
   });
 
   clearResetTimeBtn.addEventListener('click', function() {
     localStorage.removeItem(resetTimeKey);
     resetDatetimeEl.value = "";
+    updateAverageMessage();
   });
 
   // Periodically check if reset is needed
